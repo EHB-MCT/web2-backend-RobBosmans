@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 // Return all users from the database
 app.get('/login', async (req, res) =>{
 
-    /* try{
+    try{
         //connect to the db
         await client.connect();
 
@@ -38,8 +38,7 @@ app.get('/login', async (req, res) =>{
         });
     }finally {
         await client.close();
-    } */
-    res.status(200).send('ok');
+    }
 });
 
 
