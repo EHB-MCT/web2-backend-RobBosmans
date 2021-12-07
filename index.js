@@ -17,8 +17,8 @@ app.get('/', (req, res) => {
     res.status(300).redirect('/info.html');
 });
 
-// Return all challenges from the database
-app.get('/challenges', async (req, res) =>{
+// Return all users from the database
+app.get('/login', async (req, res) =>{
 
     try{
         //connect to the db
