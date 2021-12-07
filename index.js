@@ -25,7 +25,7 @@ app.get('/challenges', async (req, res) =>{
         await client.connect();
 
         //retrieve the challenges collection data
-        const colli = client.db('Challenge').collection('challenges');
+        const colli = client.db('stravaroutesapp').collection('login');
         const chs = await colli.find({}).toArray();
 
         //Send back the data with the response
