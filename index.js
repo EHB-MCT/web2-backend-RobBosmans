@@ -1,6 +1,3 @@
-const cors = require ('cors');
-app.use(cors())
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient, ObjectId } = require('mongodb');
@@ -14,6 +11,8 @@ const port = process.env.PORT // 1337;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+const cors = require ('cors');
+app.use(cors())
 
 //Root route
 app.get('/', (req, res) => {
