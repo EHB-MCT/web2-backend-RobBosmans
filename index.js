@@ -89,13 +89,13 @@ app.post('/login', async (req, res) => {
         //connect to the db
         await client.connect();
 
-        //retrieve the challenge collection data
+        //retrieve the user collection data
         const colli = client.db('stravaroutesapp').collection('login');
 
-        // Validation for double challenges
-        const challenge = await colli.findOne({name: req.body.name, password: req.body.password});
-        if(challenge){
-            res.status(400).send('Bad request: user already exists with ' + 'first name ' + req.body.name);
+        // Validation for double users
+        const user = await colli.findOne({name: req.body.name, password: req.body.password});
+        if(user){
+            res.status(400).send('Bad request: user already exists with ' + 'name ' + req.body.name);
             return;
         } 
         // Create the new user
