@@ -80,7 +80,7 @@ app.get('/login/:id', async (req,res) => {
 // save a user
 app.post('/login', async (req, res) => {
 
-    if(!req.body.first_name || !req.body.last_name || !req.body.password){
+    if(!req.body.name || !req.body.password){
         res.status(400).send('Bad request: missing first name, last name or password');
         return;
     }
@@ -93,16 +93,15 @@ app.post('/login', async (req, res) => {
         const colli = client.db('stravaroutesapp').collection('login');
 
         // Validation for double challenges
-        const challenge = await colli.findOne({first_name: req.body.first_name, last_name: req.body.last_name, password: req.body.password});
+        const challenge = await colli.findOne({name: req.body.name, password: req.body.password});
         if(challenge){
-            res.status(400).send('Bad request: user already exists with ' + 'first name ' + req.body.first_name + 'last name ' + req.body.last_name);
+            res.status(400).send('Bad request: user already exists with ' + 'first name ' + req.body.name);
             return;
         } 
         // Create the new user
         let newUser = {
-            name: req.body.first_name,
-            points: req.body.last_name,
-            course: req.body.password
+            name: req.body.name,
+            password: req.body.password
         }
         
         // Insert into the database
