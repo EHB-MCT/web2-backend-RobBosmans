@@ -56,11 +56,11 @@ app.get('/login/:id', async (req,res) => {
         //only look for a challenge with this ID
         const query = { _id: ObjectId(req.params.id) };
 
-        const challenge = await colli.findOne(query);
+        const user = await colli.findOne(query);
 
-        if(challenge){
+        if(user){
             //Send back the file
-            res.status(200).send(challenge);
+            res.status(200).send(user);
             return;
         }else{
             res.status(400).send('User could not be found with id: ' + req.params.id);
@@ -122,7 +122,7 @@ app.post('/login', async (req, res) => {
 });
 
 //update a user
-app.put('/login', async (req,res) => {
+app.put('/login/:id', async (req,res) => {
     //Check for body data
     if(!req.body.name){
         res.status(400).send({
@@ -140,11 +140,11 @@ app.put('/login', async (req,res) => {
         const colli = client.db('stravaroutesapp').collection('login');
 
          // Validation for existing user
-        const bg = await colli.findOne({name: req.params.name});
+        const bg = await colli.findOne({_id: ObjectId(req.params.id)});
         if(!bg){
             res.status(400).send({
                 error: 'Bad Request',
-                value: `There is no user with name: ${req.params.name}`
+                value: `There is no user with id: ${req.params.id}`
             });
             return;
         } 
