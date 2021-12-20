@@ -121,6 +121,61 @@ app.post('/login', async (req, res) => {
     }
 });
 
+//update a user
+app.put('/login', async (req,res) => {
+    //Check for body data
+    if(!req.body.name){
+        res.status(400).send({
+            error: 'Bad Request',
+            value: 'Missing name'
+        });
+        return;
+    }
+
+    try{
+         //connect to the db
+        await client.connect();
+
+         //retrieve the user collection data
+        const colli = client.db('stravaroutesapp').collection('login');
+
+         // Validation for existing user
+        const bg = await colli.findOne({name: req.params.name});
+        if(!bg){
+            res.status(400).send({
+                error: 'Bad Request',
+                value: `There is no user with name: ${req.params.name}`
+            });
+            return;
+        } 
+         // Create the new user object
+        let newUser = {
+            name: req.body.name,
+            course: req.body.password
+        }
+        // Add the optional session field
+        if(req.body.routes){
+            newUser.routes = req.body.routes;
+        }
+        
+         // Insert into the database
+        let updateResult = await colli.updateOne({_id: ObjectId(req.params.id)}, 
+        {$set: newUser});
+
+         //Send back successmessage
+        res.status(201).json(updateResult);
+        return;
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            error: 'error',
+            value: error
+        });
+    }finally {
+        await client.close();
+    }
+});
+
 // delete user
 app.delete('/login/:id', async (req,res) => {
     //id is located in the query: req.params.id
