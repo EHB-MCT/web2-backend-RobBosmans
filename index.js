@@ -124,13 +124,13 @@ app.post('/login', async (req, res) => {
 //update a user
 app.put('/login/:id', async (req,res) => {
     //Check for body data
-    if(!req.body.name){
+    /* if(!req.body.name){
         res.status(400).send({
             error: 'Bad Request',
             value: 'Missing name'
         });
         return;
-    }
+    } */
 
     try{
          //connect to the db
