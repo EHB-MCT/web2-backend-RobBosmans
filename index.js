@@ -150,8 +150,8 @@ app.put('/login/:id', async (req,res) => {
         } 
          // Create the new user object
         let newUser = {
-            /* name: req.body.name,
-            password: req.body.password */
+            name: req.body.name,
+            password: req.body.password
         }
         // Add the optional session field
         if(req.body.routes){
